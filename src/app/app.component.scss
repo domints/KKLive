@@ -1,0 +1,42 @@
+.sidenav {
+    min-width: 200px;
+    max-width: 300px;
+    width: 60%;
+}
+
+.sidenav-container {
+    min-height: 100%;
+}
+
+.sidenav-toggle-btn {
+    margin-right: 16px;
+}
+
+.app-toolbar {
+    overflow: hidden;
+    position: fixed;
+    z-index: 1;
+}
+
+.sidenav-content-root {
+    padding-top: 56px;
+    height: 100vh;
+
+    .app-toolbar {
+        margin-top: -56px;
+    }
+}
+
+@media(min-width: 600px) {
+    .sidenav-content-root {
+        padding-top: 64px;
+
+        .app-toolbar {
+            margin-top: -64px;
+        }
+    }
+}
+
+.router-container {
+    height: 100%;
+}

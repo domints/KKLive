@@ -1,0 +1,73 @@
+<div class="stop-departures">
+  <div class="stop-input container">
+    <mat-form-field class="autocomplete-form-field">
+      <input type="text" matInput [matAutocomplete]="auto" [formControl]="autocompleteControl"
+        placeholder="Szukaj przystanku...">
+      <button type="button" mat-icon-button matSuffix (click)="clearDepartures()" *ngIf="currentStop">
+        <mat-icon class="stop-input__clear" aria-label="Clear">close</mat-icon>
+      </button>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="autocompleteStopDisplayFn">
+        <mat-option *ngFor="let option of autocompleteOptions" [value]="option">{{ option.name }}</mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <div class="stop-favourites__list-container" *ngIf="(!passages || passages.length == 0) && !currentStop">
+    <div class="container-margin">Najczęściej sprawdzane:</div>
+    <mat-list class="stop-favourites__list" [disableRipple]="false">
+      <div class="list-item" *ngFor="let favItem of favouriteStops">
+        <mat-list-item>
+          <favourite-stop-list-item [stop]="favItem" (stopClicked)="favouriteSelected($event)"
+            (stopDeleted)="favouriteDeleted($event)"></favourite-stop-list-item>
+        </mat-list-item>
+      </div>
+    </mat-list>
+    <div class="container empty-favourites" *ngIf="!favouriteStops || favouriteStops.length == 0">
+      <div class="empty-favourites__text">
+        Tu pojawi się 10 najczęściej sprawdzanych przez Ciebie przystanków
+      </div>
+      <div class="empty-favourites__icon">
+        <mat-icon class="empty-favourites__icon__item" aria-hidden="true">favorite</mat-icon>
+      </div>
+    </div>
+  </div>
+  <div class="stop-departures__list-container" *ngIf="passages !== null">
+    <mat-list class="stop-departures__list" [disableRipple]="false" [class.hidden]="passages.length == 0">
+      <mat-expansion-panel class="old-passages" *ngIf="oldPassages.length > 0">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Poprzednie przejazdy
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="list-item" [class.list-item--selected]="selectedPassage == passage"
+          *ngFor="let passage of oldPassages">
+          <mat-list-item [matMenuTriggerFor]="passageMenu">
+            <passage-list-item [passage]="passage"></passage-list-item>
+          </mat-list-item>
+          <mat-menu #passageMenu="matMenu">
+            <button mat-menu-item *ngIf="passage.tripId" (click)="passageDetails(passage)">Szczegóły...</button>
+          </mat-menu>
+        </div>
+      </mat-expansion-panel>
+      <div class="list-item" [class.list-item--selected]="selectedPassage == passage"
+        *ngFor="let passage of currentPassages">
+        <mat-list-item [matMenuTriggerFor]="passageMenu">
+          <passage-list-item [passage]="passage"></passage-list-item>
+        </mat-list-item>
+        <mat-menu class="passage-list-item-menu" #passageMenu="matMenu">
+          <button mat-menu-item *ngIf="passage.tripId" (click)="passageDetails(passage)">Szczegóły</button>
+        </mat-menu>
+      </div>
+    </mat-list>
+    <div class="container empty-departures" *ngIf="(!passages || passages.length == 0)" >
+      <div class="empty-departures__text">
+        Niestety nie ma żadnych odjazdów do wyświetlenia :(
+      </div>
+      <div class="empty-departures__icon">
+        <mat-icon class="empty-departures__icon__item" aria-hidden="true">departure_board</mat-icon>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="trip-passages" *ngIf="screenWidth >= 1200">
+  <passage-detail-list *ngIf="tripId" [tripId]="tripId" [vehicleType]="vehicleType"></passage-detail-list>
+</div>

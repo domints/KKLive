@@ -1,0 +1,20 @@
+<div class="row passage" [class.passage--old]="passage.isOld">
+    <div class="passage__line">
+        <span>{{ passage.line }}</span>
+    </div>
+    <div class="passage__description">
+        <div class="passage__direction">
+            {{ passage.direction }}
+        </div>
+        <div class="passage__vehicle" *ngIf="passage.sideNo">
+            {{ passage.sideNo }} • {{ passage.modelName }}  <!--<div class="disability-icon">&nbsp;</div>-->
+        </div>
+    </div>
+    <div class="time-column">
+        <div class="passage__time" [class.passage__time--subtime]="!passage.isOld && passage.delayMinutes"
+            [class.passage__time--positive]="passage.delayMinutes < 0"
+            [class.passage__time--negative]="passage.delayMinutes > 0" [attr.data-subtime-value]="passage.delayMinutes + ' min'">
+            <span class="align-middle passage__time__value">{{ passage.timeString }}</span>
+        </div>
+    </div>
+</div>

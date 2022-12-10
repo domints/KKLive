@@ -1,0 +1,106 @@
+:host {
+    width: 100%;
+}
+
+.passage {
+    height: 48px;
+
+    &__line {
+        font-size: 24px;
+        width: 64px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: right;
+        padding: 8px;
+    }
+
+    &__description {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    &__direction {
+        font-size: 14px;
+        padding-right: 0;
+        max-height: 100%;
+        flex-basis: 0;
+        flex-grow: 1;
+        padding-top: 3px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    &__vehicle {
+        font-size: 10px;
+        padding-bottom: 4px;
+        line-height: 16px;
+    }
+
+    &__time {
+        font-size: 18px;
+        padding-right: 15px;
+        height: 100%;
+        width: 95px;
+        vertical-align: middle;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        &__value {
+            position: relative;
+        }
+
+        &--subtime::after {
+            content: attr(data-subtime-value);
+            position: absolute;
+            top: 26px;
+            font-size: 10px;
+        }
+
+        &--positive::after {
+            color: green;
+        }
+
+        &--negative::after {
+            color: darkred;
+        }
+
+        @media (prefers-color-scheme: dark) {
+          &--negative::after {
+            color: #50EB52;
+          }
+          &--negative::after {
+            color: #ED5153;
+          }
+        }
+    }
+
+    &__line,
+    &__time,
+    .time-column {
+        padding-left: 0;
+    }
+
+    &--old {
+        opacity: 0.6;
+    }
+}
+
+
+.row {
+    width: 100%;
+    margin-left: 0;
+}
+
+.disability-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-color: brown;
+}

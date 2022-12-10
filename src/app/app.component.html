@@ -1,0 +1,24 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+        <mat-toolbar>Menu</mat-toolbar>
+        <mat-nav-list (click)="closeDrawer()">
+            <a mat-list-item routerLink="departures">Odjazdy</a>
+            <a mat-list-item routerLink="map">Mapa (WIP)</a>
+            <a mat-list-item href="#">WIP</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content-root" fixedInViewport="true">
+        <mat-toolbar class="app-toolbar">
+            <button type="button" class="sidenav-toggle-btn" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="!showBackArrow && isHandset$ | async">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+            <button type="button" class="sidenav-toggle-btn" aria-label="Toggle sidenav" mat-icon-button (click)="goBack()" *ngIf="showBackArrow">
+                <mat-icon aria-label="Back button">arrow_back</mat-icon>
+            </button>
+            <span>{{ title }}</span>
+        </mat-toolbar>
+        <div class="router-container">
+            <router-outlet (activate)="onActivate($event)"></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
