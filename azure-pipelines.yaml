@@ -26,7 +26,7 @@ steps:
   displayName: 'Build Angular for Prod'
   workingDirectory: .
 
-- script: mkdir -p Output && cp azure-publish.sh Output/azure-publish.sh && tar -czf Output/artifact.tar.gz dist/ azure-publish.sh
+- script: mkdir -p Output && cp azure-publish.sh Output/azure-publish.sh && tar -czf Output/artifact.tar.gz -C dist/
   displayName: 'Move results to Output dir'
   
 - task: PublishBuildArtifacts@1
