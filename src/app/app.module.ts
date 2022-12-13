@@ -28,6 +28,7 @@ import { PassageDetailListComponent } from './components/passage-details/passage
 import { PassageListItemComponent } from './components/list-items/passage-list-item/passage-list-item.component';
 import { TripPassageListItemComponent } from './components/list-items/trip-passage-list-item/trip-passage-list-item.component';
 import { FavouriteStopListItemComponent } from './components/list-items/favourite-stop-list-item/favourite-stop-list-item.component';
+import { CatLoaderComponent } from './components/cat-loader/cat-loader.component';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { FavouriteStopListItemComponent } from './components/list-items/favourit
         PassageListItemComponent,
         TripPassageListItemComponent,
         FavouriteStopListItemComponent,
-        PassageDetailListComponent
+        PassageDetailListComponent,
+        CatLoaderComponent
     ],
     imports: [
         BrowserModule,

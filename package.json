@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "watch": "ng build -c development --watch"
+    "watch": "ng build -c development --watch",
+    "serve": "ng serve --watch"
   },
   "private": true,
   "dependencies": {

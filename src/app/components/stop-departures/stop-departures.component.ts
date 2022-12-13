@@ -9,6 +9,7 @@ import { PlausibleService } from 'src/app/services/plausible.service';
 import { interval } from 'rxjs';
 import { db, StopStat } from 'src/app/db';
 import { firstBy } from 'thenby';
+import { LoaderService } from 'src/app/services/loader.service';
 
 
 @Component({
@@ -53,7 +54,8 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
   constructor(private stopsService: StopsService,
     private departureDataService: DepartureDataService,
     private router: Router,
-    private plausibleService: PlausibleService
+    private plausibleService: PlausibleService,
+    private loaderService: LoaderService
   ) { }
 
   ngOnInit() {
@@ -79,6 +81,9 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
     this.passages = null;
     this.stopValueEvents = false;
     this.toolbarTitle = "Odjazdy";
+    this.selectedPassage = null;
+    this.tripId = null;
+    this.vehicleType = null;
   }
 
   refreshFavourites() {
@@ -142,7 +147,9 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
   }
 
   refreshPassages() {
-    this.stopsService.getPassages(this.currentStop.groupId).subscribe(r => {
+    this.stopsService.getPassages(this.currentStop.groupId)
+      .pipe(this.loaderService.attachLoader())
+      .subscribe(r => {
       this.passages = r;
       this.currentPassages = r.filter(p => !p.isOld);
       this.oldPassages = r.filter(p => p.isOld);

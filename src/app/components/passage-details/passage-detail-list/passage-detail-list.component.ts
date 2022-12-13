@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
+import { LoaderService } from 'src/app/services/loader.service';
 import { VehicleType, vehicleTypeToString } from 'src/app/services/stops.service';
 import { TripPassages, TripPassagesService } from 'src/app/services/trip-passages.service';
 
@@ -25,7 +26,8 @@ export class PassageDetailListComponent implements OnInit {
   dataLoadSubcsciption: Subscription;
 
   constructor(
-    private tripPassagesService: TripPassagesService) { }
+    private tripPassagesService: TripPassagesService,
+    private loaderService: LoaderService) { }
 
   ngOnInit(): void {
     this.refreshSubscription = interval(5000).subscribe((i) => {
@@ -55,7 +57,9 @@ export class PassageDetailListComponent implements OnInit {
 
     if (!this.reloading && this.tripId) {
       this.reloading = true;
-      this.dataLoadSubcsciption = this.tripPassagesService.getTripPassages(this.tripId, vehicleTypeToString(this.vehicleType)).subscribe(psgs => {
+      this.dataLoadSubcsciption = this.tripPassagesService.getTripPassages(this.tripId, vehicleTypeToString(this.vehicleType))
+        //.pipe(this.loaderService.attachLoader())
+        .subscribe(psgs => {
         this.reloading = false;
         this.refreshData(psgs);
       });
