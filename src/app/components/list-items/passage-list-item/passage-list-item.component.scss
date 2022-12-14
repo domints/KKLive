@@ -1,3 +1,5 @@
+@import "../../../../variables";
+
 :host {
     width: 100%;
 }
@@ -25,7 +27,7 @@
     }
 
     &__direction {
-        font-size: 14px;
+        font-size: $--md-sys-typescale-body-large-size;
         padding-right: 0;
         max-height: 100%;
         flex-basis: 0;
@@ -37,7 +39,7 @@
     }
 
     &__vehicle {
-        font-size: 10px;
+        font-size: $--md-sys-typescale-label-small-size;
         padding-bottom: 4px;
         line-height: 16px;
     }
@@ -45,11 +47,11 @@
     &__time {
         font-size: 18px;
         padding-right: 15px;
+        padding-top: 8px;
         height: 100%;
         width: 95px;
         vertical-align: middle;
         display: flex;
-        align-items: center;
         justify-content: flex-end;
 
         &__value {
@@ -59,8 +61,8 @@
         &--subtime::after {
             content: attr(data-subtime-value);
             position: absolute;
-            top: 26px;
-            font-size: 10px;
+            top: 24px;
+            font-size: $--md-sys-typescale-label-small-size;
         }
 
         &--positive::after {
