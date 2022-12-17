@@ -9,6 +9,7 @@ import { IRoutableComponent } from 'src/app/interfaces/IRoutableComponent';
 export class NotFoundComponent implements OnInit, IRoutableComponent {
   showBackArrow: boolean = false;
   toolbarTitle: string = "Strona nie istnieje";
+  toolbarIcon: string = undefined;
   onRouteIn() {
   }
   onRouteOut() {

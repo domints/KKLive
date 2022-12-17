@@ -15,7 +15,8 @@
             <button type="button" class="sidenav-toggle-btn" aria-label="Toggle sidenav" mat-icon-button (click)="goBack()" *ngIf="showBackArrow">
                 <mat-icon aria-label="Back button">arrow_back</mat-icon>
             </button>
-            <span>{{ title }}</span>
+            <span class="app-toolbar__title">{{ title }}</span>
+            <mat-icon [fontIcon]="toolbarIcon"></mat-icon>
         </mat-toolbar>
         <div class="router-container">
             <router-outlet (activate)="onActivate($event)"></router-outlet>

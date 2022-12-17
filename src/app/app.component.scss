@@ -16,6 +16,11 @@
     overflow: hidden;
     position: fixed;
     z-index: 1;
+    display: flex;
+
+    &__title {
+        flex-grow: 1;
+    }
 }
 
 .sidenav-content-root {

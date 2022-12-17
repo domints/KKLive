@@ -11,6 +11,7 @@ import { TripPassages, TripPassagesService } from 'src/app/services/trip-passage
 })
 export class PassageDetailListComponent implements OnInit {
   @Output() updateToolbarTitle = new EventEmitter<string>();
+  @Output() updateToolbarIcon = new EventEmitter<string>();
   @Input() tripId: string;
   @Input() vehicleType: VehicleType;
   @Input() stopAutoReload: boolean;
@@ -71,6 +72,9 @@ export class PassageDetailListComponent implements OnInit {
     if (this.passages) {
       //this.updateToolbarTitle.emit(this.passages.line + " -> " + this.passages.direction);
     }
+    let icon = this.passages.isGPS ? "satellite_alt" : "departure_board";
+    console.log("Should emit", icon);
+    this.updateToolbarIcon.emit(icon);
 
     this.hasStopping = this.passages.listItems.some(p => p.isStopping);
     if(this.hasStopping)

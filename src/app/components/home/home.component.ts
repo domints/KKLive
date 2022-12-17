@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit, IRoutableComponent {
   }
   showBackArrow: boolean = false;
   toolbarTitle: string = "TTSS Client - Home";
+  toolbarIcon: string = undefined;
 
   constructor(private router: Router) { }
 

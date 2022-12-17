@@ -14,6 +14,7 @@ export class PassageDetailsComponent implements OnInit, OnDestroy, IRoutableComp
 
   showBackArrow: boolean = true;
   toolbarTitle: string = "Szczegóły";
+  toolbarIcon: string = undefined;
 
   paramSubscription: Subscription;
   tripId: any;
@@ -49,6 +50,11 @@ export class PassageDetailsComponent implements OnInit, OnDestroy, IRoutableComp
   }
 
   updateTitle(event: string) {
-    //this.toolbarTitle = event;
+    this.toolbarTitle = event;
+  }
+
+  updateIcon(event: string) {
+    this.toolbarIcon = event;
+    console.log("got icon update evt", this.toolbarIcon);
   }
 }

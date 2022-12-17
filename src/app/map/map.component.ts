@@ -85,6 +85,7 @@ export class MapComponent implements OnInit, IRoutableComponent {
 
   showBackArrow: boolean = true;
   toolbarTitle: string = "Mapa";
+  toolbarIcon: string = undefined;
   onRouteIn() {
     this.mapDataService.restore(this);
     this.reloadStopFeatures();

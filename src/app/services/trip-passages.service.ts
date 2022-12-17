@@ -19,6 +19,7 @@ export class TripPassages {
   line: string;
   direction: string;
   listItems: TripPassageListItem[];
+  isGPS: boolean;
 }
 
 export class TripPassageListItem {

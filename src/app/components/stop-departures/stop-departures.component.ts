@@ -34,6 +34,7 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
   }
   showBackArrow: boolean = false;
   toolbarTitle: string = "Odjazdy";
+  toolbarIcon: string = undefined;
   autocompleteControl: UntypedFormControl = new UntypedFormControl();
   autocompleteOptions: StopAutocomplete[] = [];
   currentStop: StopAutocomplete;

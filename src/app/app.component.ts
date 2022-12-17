@@ -41,6 +41,10 @@ export class AppComponent {
     this.isMobile && this.drawer.close();
   }
 
+  get toolbarIcon(): string {
+    return this.currentComponent && this.currentComponent.toolbarIcon;
+  }
+
   get title(): string {
     return (this.currentComponent && this.currentComponent.toolbarTitle) || "Loading TTSSC...";
   }
