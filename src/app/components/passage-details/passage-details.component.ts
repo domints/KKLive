@@ -55,6 +55,5 @@ export class PassageDetailsComponent implements OnInit, OnDestroy, IRoutableComp
 
   updateIcon(event: string) {
     this.toolbarIcon = event;
-    console.log("got icon update evt", this.toolbarIcon);
   }
 }
