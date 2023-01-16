@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { MatDrawer } from '@angular/material/sidenav';
 import { IRoutableComponent } from './interfaces/IRoutableComponent';
 import { PlausibleService } from './services/plausible.service';
+import { CityEntry, SettingsService } from './services/settings.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +18,7 @@ export class AppComponent {
   @ViewChild('drawer') drawer: MatDrawer;
   isMobile: boolean = false;
   currentComponent: IRoutableComponent;
+  cities: CityEntry[] = [];
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => { this.isMobile = result.matches; return result.matches; })
@@ -24,9 +27,12 @@ export class AppComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private location: Location,
-    plausibleService: PlausibleService
+    plausibleService: PlausibleService,
+    private settingsService: SettingsService,
+    private router: Router
   ) {
     plausibleService.init();
+    settingsService.getCities().subscribe(c => this.cities = c);
   }
 
   async onActivate(e) {
@@ -53,7 +59,17 @@ export class AppComponent {
     return this.currentComponent && this.currentComponent.showBackArrow;
   }
 
+  get currentCityName(): string {
+    return this.settingsService.getCurrentCity()?.name;
+  }
+
   goBack() {
     this.location.back()
+  }
+
+  changeCity(city: CityEntry) {
+    this.settingsService.setCurrentCity(city);
+    this.closeDrawer();
+    this.router.navigate(['/departures']);
   }
 }

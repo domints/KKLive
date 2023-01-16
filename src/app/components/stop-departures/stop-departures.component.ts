@@ -10,6 +10,7 @@ import { interval } from 'rxjs';
 import { db, StopStat } from 'src/app/db';
 import { firstBy } from 'thenby';
 import { LoaderService } from 'src/app/services/loader.service';
+import { SettingsService } from 'src/app/services/settings.service';
 
 
 @Component({
@@ -56,7 +57,8 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
     private departureDataService: DepartureDataService,
     private router: Router,
     private plausibleService: PlausibleService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private settingsService: SettingsService
   ) { }
 
   ngOnInit() {
@@ -87,12 +89,20 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
     this.vehicleType = null;
   }
 
-  refreshFavourites() {
-    db.stopStats.orderBy("useCount").reverse().limit(10).toArray(stats => {
-      if (!stats)
-        return;
-      this.favouriteStops = stats.sort(firstBy("useCount", "desc").thenBy("lastUse", "desc").thenBy("name"));
-    })
+  async refreshFavourites() {
+    const cityEntry = this.settingsService.getCurrentCity();
+    const city = cityEntry ? cityEntry.value : "krakow";
+    const query = db.stopStats.where("city").equals(city);
+    const ids = new Set(await query.primaryKeys());
+    const promises = [];
+
+    await db.stopStats.orderBy("useCount").reverse()
+      .until(() => promises.length >= 10 || promises.length >= ids.size)
+      .eachPrimaryKey(id => {
+        if (ids.has(id)) promises.push(db.stopStats.get(id));
+      });
+    const stats = await Promise.all(promises);
+    this.favouriteStops = stats.sort(firstBy("useCount", "desc").thenBy("lastUse", "desc").thenBy("name"));
   }
 
   favouriteSelected(stop: StopStat) {
@@ -114,10 +124,13 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
   }
 
   showStop(stop: StopAutocomplete) {
-    db.stopStats.where("groupId").equals(stop.groupId).first(((stat) => {
+    let cityEntry = this.settingsService.getCurrentCity();
+    let city = cityEntry ? cityEntry.value : "krakow";
+    db.stopStats.where("groupId").equals(stop.groupId).and(x => x.city == city || (city == undefined && x.city == undefined)).first(((stat) => {
       if (stat) {
         stat.useCount++;
         stat.lastUse = Date.now();
+        stat.city = city;
         db.stopStats.put(stat);
       }
       else {
@@ -125,7 +138,8 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
           groupId: stop.groupId,
           name: stop.name,
           useCount: 1,
-          lastUse: Date.now()
+          lastUse: Date.now(),
+          city: city
         });
       }
       this.refreshFavourites();

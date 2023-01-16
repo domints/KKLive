@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "watch": "ng build -c development --watch",
-    "serve": "ng serve --watch"
+    "serve": "ng serve -c development --watch"
   },
   "private": true,
   "dependencies": {

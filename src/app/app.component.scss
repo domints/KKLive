@@ -45,3 +45,13 @@
 .router-container {
     height: 100%;
 }
+
+.city-menu-btn {
+    &__content {
+        display: flex;
+    }
+
+    &__label {
+        flex-grow: 1;
+    }
+}

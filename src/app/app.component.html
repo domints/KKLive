@@ -1,11 +1,17 @@
 <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
         <mat-toolbar>Menu</mat-toolbar>
-        <mat-nav-list (click)="closeDrawer()">
+        <mat-nav-list class="menuList" (click)="closeDrawer()">
             <a mat-list-item routerLink="departures">Odjazdy</a>
             <a mat-list-item routerLink="map">Mapa (WIP)</a>
             <a mat-list-item href="#">WIP</a>
         </mat-nav-list>
+        <mat-action-list>
+            <button mat-list-item [matMenuTriggerFor]="cityMenu"><div class="city-menu-btn__content"><div class="city-menu-btn__label">{{ currentCityName }}</div><mat-icon aria-hidden="true">arrow_drop_down</mat-icon></div></button>
+        </mat-action-list>
+        <mat-menu #cityMenu="matMenu">
+            <button mat-menu-item *ngFor="let city of cities" (click)="changeCity(city)">{{ city.name }}</button>
+        </mat-menu>
     </mat-sidenav>
     <mat-sidenav-content class="sidenav-content-root" fixedInViewport="true">
         <mat-toolbar class="app-toolbar">

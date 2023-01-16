@@ -82,3 +82,14 @@ body {
       opacity: 1;
   }
 }
+
+.sidenav {
+  .mat-drawer-inner-container {
+    display: flex;
+    flex-direction: column;
+
+    .mat-mdc-nav-list {
+      flex-grow: 1;
+    }
+  }
+}

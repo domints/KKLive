@@ -110,6 +110,9 @@
           "configurations": {
             "production": {
               "browserTarget": "TTSSWebClient:build:production"
+            },
+            "development": {
+              "browserTarget": "TTSSWebClient:build:development"
             }
           }
         },
