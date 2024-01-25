@@ -39,22 +39,22 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="list-item" [class.list-item--selected]="selectedPassage == passage"
-          *ngFor="let passage of oldPassages">
+          *ngFor="let passage of oldPassages; let last = last;">
           <mat-list-item [matMenuTriggerFor]="passageMenu">
             <passage-list-item [passage]="passage"></passage-list-item>
           </mat-list-item>
-          <mat-divider></mat-divider>
+          <mat-divider *ngIf="!last"></mat-divider>
           <mat-menu #passageMenu="matMenu">
             <button mat-menu-item *ngIf="passage.tripId" (click)="passageDetails(passage)">Szczegóły...</button>
           </mat-menu>
         </div>
       </mat-expansion-panel>
       <div class="list-item" [class.list-item--selected]="selectedPassage == passage"
-        *ngFor="let passage of currentPassages">
+        *ngFor="let passage of currentPassages; let last = last;">
         <mat-list-item [matMenuTriggerFor]="passageMenu">
           <passage-list-item [passage]="passage"></passage-list-item>
         </mat-list-item>
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="!last"></mat-divider>
         <mat-menu class="passage-list-item-menu" #passageMenu="matMenu">
           <button mat-menu-item *ngIf="passage.tripId" (click)="passageDetails(passage)">Szczegóły</button>
         </mat-menu>
