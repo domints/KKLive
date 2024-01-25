@@ -77,6 +77,7 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
   clearDepartures() {
     this.stopValueEvents = true;
     this.autocompleteControl.setValue(null);
+    this.autocompleteOptions = [];
     this.stopRefresher();
     this.currentStop = null;
     this.passages = null;
