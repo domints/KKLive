@@ -152,9 +152,9 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
     this.stopsService.getPassages(this.currentStop.groupId)
       .pipe(this.loaderService.attachLoader())
       .subscribe(r => {
-      this.passages = r;
-      this.currentPassages = r.filter(p => !p.isOld);
-      this.oldPassages = r.filter(p => p.isOld);
+      this.passages = r.departures;
+      this.currentPassages = r.departures.filter(p => !p.isOld);
+      this.oldPassages = r.departures.filter(p => p.isOld);
     });
   }
 

@@ -17,8 +17,8 @@ export class StopsService {
     return this.http.get<Stop[]>('https://gtfs.dszymanski.pl/stops');
   }
 
-  public getPassages(stopId: string): Observable<PassageListItem[]> {
-    return this.http.get<PassageListItem[]>(`https://gtfs.dszymanski.pl/departures/stop/${stopId}`);
+  public getPassages(stopId: string): Observable<StopPassagesResult> {
+    return this.http.get<StopPassagesResult>(`https://gtfs.dszymanski.pl/departures/stop/${stopId}`);
   }
 }
 
@@ -26,6 +26,12 @@ export enum VehicleType {
   None = 0,
   Tram = 1,
   Bus = 2
+}
+
+export enum DepartureResultType {
+  Success = 0,
+  ScheduleOnly = 1,
+  Failed = 2
 }
 
 export function vehicleTypeToString(type: VehicleType | string): string {
@@ -62,6 +68,14 @@ export class PassageListItem {
   relativeTime: number;
   tripId: string;
   vehicleType: VehicleType;
+}
+
+export class StopPassagesResult {
+  departures: PassageListItem[];
+  resultTypes: {
+    Tram: DepartureResultType
+    Bus: DepartureResultType
+  }
 }
 
 export class Stop {
