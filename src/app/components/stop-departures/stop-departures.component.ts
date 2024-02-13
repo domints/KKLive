@@ -65,7 +65,12 @@ export class StopDeparturesComponent implements OnInit, IRoutableComponent {
     this.autocompleteControl.valueChanges.subscribe((v: string | StopAutocomplete) => {
       if (!this.stopValueEvents) {
         if (typeof v === "string")
-          this.stopsService.getAutocomplete(v).subscribe(r => this.autocompleteOptions = r);
+          if (v === "plausible") {
+            this.plausibleService.setIgnore();
+          }
+          else {
+            this.stopsService.getAutocomplete(v).subscribe(r => this.autocompleteOptions = r);
+          }
         else {
           this.plausibleService.trackEvent("getDeparturesFromText", { props: { name: v.name, id: v.groupId } });
           this.showStop(v)

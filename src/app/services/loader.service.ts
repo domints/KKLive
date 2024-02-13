@@ -33,6 +33,11 @@ export class LoaderService {
                             this.hideLoader()
                             firstNext = false
                         }
+                    }, () => {
+                        if (firstNext) {
+                            this.hideLoader()
+                            firstNext = false
+                        }
                     })
                 );
             });
