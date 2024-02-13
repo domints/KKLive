@@ -25,4 +25,9 @@ export class PlausibleService {
   {
     this.plausible.trackEvent(eventName, options, eventData);
   }
+
+  setIgnore()
+  {
+    localStorage.plausible_ignore = true
+  }
 }
